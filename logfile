@@ -1,0 +1,76 @@
+2025-02-15 11:27:30.448 MST [41519] LOG:  starting PostgreSQL 14.16 (Homebrew) on x86_64-apple-darwin22.6.0, compiled by Apple clang version 15.0.0 (clang-1500.1.0.2.5), 64-bit
+2025-02-15 11:27:30.450 MST [41519] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-02-15 11:27:30.450 MST [41519] LOG:  listening on IPv6 address "::1", port 5432
+2025-02-15 11:27:30.451 MST [41519] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2025-02-15 11:27:30.455 MST [41520] LOG:  database system was shut down at 2025-02-15 11:26:56 MST
+2025-02-15 11:27:30.459 MST [41519] LOG:  database system is ready to accept connections
+2025-02-15 11:28:08.394 MST [41829] FATAL:  database "joelbarton" does not exist
+2025-02-15 11:28:18.009 MST [41848] FATAL:  role "postgres" does not exist
+2025-02-15 11:30:10.961 MST [41951] ERROR:  relation "members" does not exist at character 15
+2025-02-15 11:30:10.961 MST [41951] STATEMENT:  SELECT * from members;
+2025-02-15 11:40:27.453 MST [44353] ERROR:  table "gym" does not exist
+2025-02-15 11:40:27.453 MST [44353] STATEMENT:  drop table gym
+	;
+2025-02-15 11:40:44.476 MST [44408] ERROR:  table "gym" does not exist
+2025-02-15 11:40:44.476 MST [44408] STATEMENT:  drop table gym;
+2025-02-15 11:40:56.485 MST [44408] ERROR:  table "member" does not exist
+2025-02-15 11:40:56.485 MST [44408] STATEMENT:  drop table member;
+2025-02-15 11:41:05.403 MST [44408] ERROR:  relation "joelbarton" does not exist at character 15
+2025-02-15 11:41:05.403 MST [44408] STATEMENT:  select * from joelbarton
+	;
+2025-02-15 11:42:45.067 MST [44543] ERROR:  type "profiletype_enum" does not exist at character 215
+2025-02-15 11:42:45.067 MST [44543] STATEMENT:  CREATE TABLE members (
+	    id SERIAL PRIMARY KEY,
+	    email VARCHAR(50) NOT NULL UNIQUE,
+	    phonenumber VARCHAR(10) NOT NULL,
+	    firstname VARCHAR(50) NOT NULL,
+	    lastname VARCHAR(50) NOT NULL,
+	    profiletype profiletype_enum NOT NULL
+	);
+2025-02-15 11:42:57.340 MST [44543] ERROR:  type "profile_type_enum" already exists
+2025-02-15 11:42:57.340 MST [44543] STATEMENT:  CREATE TYPE profile_type_enum AS ENUM ('client', 'instructor', 'admin');
+2025-02-15 11:43:15.574 MST [44543] ERROR:  type "profiletype_enum" does not exist at character 215
+2025-02-15 11:43:15.574 MST [44543] STATEMENT:  CREATE TABLE members (
+	    id SERIAL PRIMARY KEY,
+	    email VARCHAR(50) NOT NULL UNIQUE,
+	    phonenumber VARCHAR(10) NOT NULL,
+	    firstname VARCHAR(50) NOT NULL,
+	    lastname VARCHAR(50) NOT NULL,
+	    profiletype profiletype_enum NOT NULL
+	);
+2025-02-15 11:43:27.695 MST [44543] ERROR:  type "profiletype_enum" does not exist
+2025-02-15 11:43:27.695 MST [44543] STATEMENT:  DROP type profiletype_enum;
+2025-02-15 11:44:39.774 MST [44738] FATAL:  database "members" does not exist
+2025-02-15 13:11:01.058 MST [62881] ERROR:  relation "members" does not exist at character 13
+2025-02-15 13:11:01.058 MST [62881] STATEMENT:  insert into "members" ("id", "email", "phonenumber", "firstname", "lastname", "profile_type") values (default, $1, $2, $3, $4, $5) returning "id", "email", "phonenumber", "firstname", "lastname", "profile_type"
+2025-02-15 13:15:12.031 MST [63115] FATAL:  database "members" does not exist
+2025-02-15 13:19:52.558 MST [63737] ERROR:  relation "members" does not exist at character 13
+2025-02-15 13:19:52.558 MST [63737] STATEMENT:  insert into "members" ("id", "email", "phonenumber", "firstname", "lastname", "profile_type") values (default, $1, $2, $3, $4, $5) returning "id", "email", "phonenumber", "firstname", "lastname", "profile_type"
+2025-02-15 13:57:50.370 MST [65761] ERROR:  relation "members" does not exist at character 13
+2025-02-15 13:57:50.370 MST [65761] STATEMENT:  insert into "members" ("id", "email", "phonenumber", "firstname", "lastname", "profile_type") values (default, $1, $2, $3, $4, $5) returning "id", "email", "phonenumber", "firstname", "lastname", "profile_type"
+2025-02-15 16:18:40.413 MST [72596] ERROR:  type "profile_type_enum" already exists
+2025-02-15 16:18:40.413 MST [72596] STATEMENT:  CREATE TYPE profile_type_enum AS ENUM ('client', 'instructor', 'admin');
+2025-02-15 16:18:40.414 MST [72596] ERROR:  type "profiletype_enum" does not exist at character 215
+2025-02-15 16:18:40.414 MST [72596] STATEMENT:  CREATE TABLE members (
+	    id SERIAL PRIMARY KEY,
+	    email VARCHAR(50) NOT NULL UNIQUE,
+	    phonenumber VARCHAR(10) NOT NULL,
+	    firstname VARCHAR(50) NOT NULL,
+	    lastname VARCHAR(50) NOT NULL,
+	    profiletype profiletype_enum NOT NULL
+	);
+2025-02-15 16:18:47.547 MST [72596] ERROR:  type "profiletype_enum" does not exist at character 215
+2025-02-15 16:18:47.547 MST [72596] STATEMENT:  CREATE TABLE members (
+	    id SERIAL PRIMARY KEY,
+	    email VARCHAR(50) NOT NULL UNIQUE,
+	    phonenumber VARCHAR(10) NOT NULL,
+	    firstname VARCHAR(50) NOT NULL,
+	    lastname VARCHAR(50) NOT NULL,
+	    profiletype profiletype_enum NOT NULL
+	);
+2025-02-15 16:19:12.985 MST [72596] ERROR:  table "members" does not exist
+2025-02-15 16:19:12.985 MST [72596] STATEMENT:  DROP TABLE members;
+2025-02-15 16:22:42.248 MST [72898] ERROR:  column "profile_type" of relation "members" does not exist at character 79
+2025-02-15 16:22:42.248 MST [72898] STATEMENT:  insert into "members" ("id", "email", "phonenumber", "firstname", "lastname", "profile_type") values (default, $1, $2, $3, $4, $5) returning "id", "email", "phonenumber", "firstname", "lastname", "profile_type"
+2025-02-15 16:32:08.031 MST [72939] ERROR:  syntax error at or near "*" at character 8
+2025-02-15 16:32:08.031 MST [72939] STATEMENT:  DELETE * FROM members WHERE firstname = 'Joel';
