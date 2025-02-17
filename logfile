@@ -74,3 +74,12 @@
 2025-02-15 16:22:42.248 MST [72898] STATEMENT:  insert into "members" ("id", "email", "phonenumber", "firstname", "lastname", "profile_type") values (default, $1, $2, $3, $4, $5) returning "id", "email", "phonenumber", "firstname", "lastname", "profile_type"
 2025-02-15 16:32:08.031 MST [72939] ERROR:  syntax error at or near "*" at character 8
 2025-02-15 16:32:08.031 MST [72939] STATEMENT:  DELETE * FROM members WHERE firstname = 'Joel';
+2025-02-16 19:34:56.194 MST [37547] ERROR:  cannot drop table classes because other objects depend on it
+2025-02-16 19:34:56.194 MST [37547] DETAIL:  constraint enrollments_class_id_fkey on table enrollments depends on table classes
+2025-02-16 19:34:56.194 MST [37547] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2025-02-16 19:34:56.194 MST [37547] STATEMENT:  DROP TABLE classes;
+2025-02-16 20:00:10.148 MST [44693] ERROR:  column "tag" of relation "classes" does not exist at character 42
+2025-02-16 20:00:10.148 MST [44693] STATEMENT:  insert into "classes" ("id", "category", "tag", "instructor_id", "class_date", "capacity") values (default, $1, default, $2, $3, $4) returning "id", "category", "tag", "instructor_id", "class_date", "capacity"
+2025-02-16 20:02:40.645 MST [44935] ERROR:  null value in column "tag" of relation "classes" violates not-null constraint
+2025-02-16 20:02:40.645 MST [44935] DETAIL:  Failing row contains (1, cycling, null, 4, 2025-02-16, 9).
+2025-02-16 20:02:40.645 MST [44935] STATEMENT:  insert into "classes" ("id", "category", "tag", "instructor_id", "class_date", "capacity") values (default, $1, default, $2, $3, $4) returning "id", "category", "tag", "instructor_id", "class_date", "capacity"

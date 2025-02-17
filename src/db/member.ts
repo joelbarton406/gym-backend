@@ -14,6 +14,15 @@ export const members = pgTable("members", {
 
 export type Member = InferSelectModel<typeof members>;
 
+const fields = {
+  id: members.id,
+  email: members.email,
+  phonenumber: members.phonenumber,
+  firstname: members.firstname,
+  lastname: members.lastname,
+  profiletype: members.profiletype,
+};
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
@@ -31,44 +40,20 @@ const validateConnection = async () => {
 
 validateConnection();
 
-export const getMembers = async () =>
-  await db
-    .select({
-      id: members.id,
-      email: members.email,
-      phonenumber: members.phonenumber,
-      firstname: members.firstname,
-      lastname: members.lastname,
-      profiletype: members.profiletype,
-    })
-    .from(members);
-
-export const getMemberById = async (id: number) =>
-  await db.select().from(members).where(eq(members.id, id));
+export const getMembers = async () => await db.select().from(members);
 
 export const createMember = async (newMember: Omit<Member, "id">) =>
-  await db.insert(members).values(newMember).returning({
-    id: members.id,
-    email: members.email,
-    phonenumber: members.phonenumber,
-    firstname: members.firstname,
-    lastname: members.lastname,
-    profiletype: members.profiletype,
-  });
+  await db.insert(members).values(newMember).returning(fields);
+
+export const getMemberById = async (id: number) =>
+  await db.select(fields).from(members).where(eq(members.id, id));
 
 export const updateMemberById = async (id: number, updatedMember: Member) =>
   await db
     .update(members)
     .set(updatedMember)
     .where(eq(members.id, id))
-    .returning({
-      id: members.id,
-      email: members.email,
-      phonenumber: members.phonenumber,
-      firstname: members.firstname,
-      lastname: members.lastname,
-      profiletype: members.profiletype,
-    });
+    .returning(fields);
 
 export const deleteMemberById = async (id: number) =>
   await db.delete(members).where(eq(members.id, id)).returning();
