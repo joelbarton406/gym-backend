@@ -1,7 +1,6 @@
 import { InferInsertModel, InferSelectModel, eq } from "drizzle-orm";
 import { pgTable, serial, text } from "drizzle-orm/pg-core";
-import { drizzle } from "drizzle-orm/node-postgres";
-import { Pool } from "pg";
+import { db } from "./index";
 
 export const members = pgTable("members", {
   id: serial("id").primaryKey(),
@@ -23,37 +22,33 @@ const fields = {
   profiletype: members.profiletype,
 };
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
-
-const db = drizzle(pool);
-
-const validateConnection = async () => {
-  try {
-    const result = await pool.query("SELECT 1");
-    console.log("Database connection successful:", result.rows);
-  } catch (error) {
-    console.error("Database connection failed:", error);
-  }
-};
-
-validateConnection();
-
 export const getMembers = async () => await db.select().from(members);
 
-export const createMember = async (newMember: Omit<Member, "id">) =>
-  await db.insert(members).values(newMember).returning(fields);
+export const createMember = async (newMember: Omit<Member, "id">) => {
+  const data = await db.insert(members).values(newMember).returning(fields);
+  return data[0];
+};
 
-export const getMemberById = async (id: number) =>
-  await db.select(fields).from(members).where(eq(members.id, id));
+export const getMemberById = async (
+  id: number
+): Promise<Pick<Member, "id">> => {
+  const data = await db.select(fields).from(members).where(eq(members.id, id));
+  return data[0];
+};
 
-export const updateMemberById = async (id: number, updatedMember: Member) =>
-  await db
+export const updateMemberById = async (id: number, updatedMember: Member) => {
+  const data = await db
     .update(members)
     .set(updatedMember)
     .where(eq(members.id, id))
     .returning(fields);
+  return data[0];
+};
 
-export const deleteMemberById = async (id: number) =>
-  await db.delete(members).where(eq(members.id, id)).returning();
+export const deleteMemberById = async (id: number) => {
+  const data = await db
+    .delete(members)
+    .where(eq(members.id, id))
+    .returning({ id: members.id });
+  return data[0];
+};

@@ -83,3 +83,8 @@
 2025-02-16 20:02:40.645 MST [44935] ERROR:  null value in column "tag" of relation "classes" violates not-null constraint
 2025-02-16 20:02:40.645 MST [44935] DETAIL:  Failing row contains (1, cycling, null, 4, 2025-02-16, 9).
 2025-02-16 20:02:40.645 MST [44935] STATEMENT:  insert into "classes" ("id", "category", "tag", "instructor_id", "class_date", "capacity") values (default, $1, default, $2, $3, $4) returning "id", "category", "tag", "instructor_id", "class_date", "capacity"
+2025-02-16 21:25:17.458 MST [60127] ERROR:  relation "member_classes" does not exist at character 67
+2025-02-16 21:25:17.458 MST [60127] STATEMENT:  select "classes"."id", "classes"."category", "classes"."tag" from "member_classes" inner join "classes" on "member_classes"."class_id" = "classes"."id" where "member_classes"."member_id" = $1
+2025-02-16 21:50:54.715 MST [62894] ERROR:  invalid input syntax for type integer: "NaN"
+2025-02-16 21:50:54.715 MST [62894] CONTEXT:  unnamed portal parameter $2 = '...'
+2025-02-16 21:50:54.715 MST [62894] STATEMENT:  insert into "enrollments" ("id", "member_id", "class_id", "enrollment_date") values (default, $1, $2, $3) returning "id", "member_id", "class_id", "enrollment_date"
