@@ -10,6 +10,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/joi": "^17.2.2",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "compression": "^1.8.0",
     "cookie-parser": "^1.4.7",
@@ -17,14 +19,18 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.3",
     "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "joi": "^17.13.3",
     "pg": "^8.13.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/body-parser": "^1.19.5",
     "@types/compression": "^1.7.5",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.1",
     "@types/node": "^22.13.4",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.4",

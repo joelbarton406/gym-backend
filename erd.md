@@ -1,13 +1,18 @@
+# todo
+
+1. update postgres database user schema ƒor auth
+2. add `sessions`
+
 ```mermaid
 erDiagram
     Users {
         int id PK
         string email
-        string password_hash
+        string hashed_password
         string first_name
         string last_name
         string phone
-        string profiletype
+        string profile_type
         datetime created_at
         datetime updated_at
     }

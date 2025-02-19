@@ -5,12 +5,16 @@ import compression from "compression";
 import cors from "cors";
 import "dotenv/config";
 import { Pool } from "pg";
+
 import memberRouter from "./routers/member.router";
 import classRouter from "./routers/class.router";
+import authRouter from "./routers/auth.router";
+
 const app = express();
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
+
 const validateConnection = async () => {
   try {
     const result = await pool.query("SELECT 1");
@@ -29,12 +33,9 @@ app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+app.use("/api/auth", authRouter);
 app.use("/api/members", memberRouter);
 app.use("/api/classes", classRouter);
-
-app.get("/", (req: express.Request, res: express.Response) => {
-  res.send("Hello World!");
-});
 
 app.all("*", (req, res) => {
   console.log(`404: ${req.method} ${req.path}`);
