@@ -1,7 +1,11 @@
 import express from "express";
+
+import {
+  authenticateSession,
+  authorizeMember,
+} from "../middleware/auth.middleware";
 import {
   readMembers,
-  // createMember,
   readMember,
   updateMember,
   deleteMember,
@@ -15,12 +19,11 @@ import {
 
 const memberRouter = express.Router();
 
-memberRouter.get("/", readMembers);
-// memberRouter.post("/", createMember);
-memberRouter.get("/:id", readMember);
-memberRouter.put("/:id", updateMember);
-memberRouter.delete("/:id", deleteMember);
+memberRouter.get("/:id", authenticateSession, authorizeMember, readMember);
+memberRouter.put("/:id", authenticateSession, authorizeMember, updateMember);
+memberRouter.delete("/:id", authenticateSession, authorizeMember, deleteMember);
 
+memberRouter.get("/", readMembers);
 memberRouter.get("/:id/enrollments", getMemberEnrollments);
 memberRouter.post("/:id/enrollments", enrollMember);
 memberRouter.delete("/:id/enrollments", unenrollMember);

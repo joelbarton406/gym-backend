@@ -7,7 +7,8 @@
     "outDir": "dist",
     "sourceMap": true,
     "noImplicitAny": true,
-    "typeRoots": ["./node_modules/@types", "./types"]
+    "typeRoots": ["./node_modules/@types", "types"], // Make sure './types' is included here
+    "types": ["node", "express"] // Ensure 'express' is listed
   },
-  "include": ["src/**/*", "types/**/*.d.ts"]
+  "include": ["src/**/*", "types/**/*"] // Ensure 'types' is included here
 }

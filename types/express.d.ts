@@ -1,6 +1,5 @@
-// types/express.d.ts
 declare namespace Express {
-  export interface Request {
+  interface Request {
     memberId?: number;
   }
 }

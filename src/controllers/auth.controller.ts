@@ -10,8 +10,14 @@ import { Request, Response } from "express";
 export const signup = async (req: Request, res: Response) => {
   try {
     const rawMember: RawMember = validate(req.body, memberSignupSchema);
-    const newMember: Member = await authService.signup(rawMember);
-    res.status(201).json(newMember);
+    await authService.signup(rawMember);
+
+    const { sessionId, member } = await authService.login({
+      email: rawMember.email,
+      plaintext_password: rawMember.plaintext_password,
+    });
+
+    res.status(201).json({ sessionId, member });
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: error.message });
@@ -20,13 +26,9 @@ export const signup = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   try {
-    /* 
-    validate credentials
-    perform login
-    */
     const credentials: Credentials = validate(req.body, memberLoginSchema);
-    const session = await authService.login(credentials);
-    res.status(200).json(session);
+    const { sessionId, member } = await authService.login(credentials);
+    res.status(200).json({ sessionId, member });
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: error.message });

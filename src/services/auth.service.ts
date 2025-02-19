@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { randomBytes } from "crypto";
 import { eq } from "drizzle-orm";
 const SALT_ROUNDS = 12;
-const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+const SESSION_DURATION = 60 * 30 * 1000; // 30 minute session
 
 export const signup = async (rawMember: RawMember) => {
   const [existingMember] = await db
@@ -73,7 +73,7 @@ export const login = async (credentials: Credentials) => {
       member_id: member.id,
       expires_at: expiresAt,
     })
-    .returning(); // You can now access the inserted session here
+    .returning(); 
 
   return {
     sessionId: session.id,

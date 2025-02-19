@@ -8,3 +8,15 @@ authRouter.post("/login", login);
 authRouter.post("/logout", authenticateSession, logout);
 
 export default authRouter;
+
+/* 
+client -> signup -> validate request & authService.signup
+    -> create newMember/store in database
+    -> generate token, attach token to response
+    -> redirect to auth/login
+
+
+client -> login -> validate request & authService.login
+    -> returns session
+
+*/
