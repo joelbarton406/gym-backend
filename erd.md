@@ -8,7 +8,7 @@ erDiagram
     Users {
         int id PK
         string email
-        string hashed_password
+        string password
         string first_name
         string last_name
         string phone

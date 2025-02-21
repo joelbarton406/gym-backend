@@ -14,7 +14,7 @@ export const signup = async (req: Request, res: Response) => {
 
     const { sessionId, member } = await authService.login({
       email: rawMember.email,
-      plaintext_password: rawMember.plaintext_password,
+      password: rawMember.password,
     });
 
     res.status(201).json({ sessionId, member });

@@ -3,7 +3,7 @@ CREATE TYPE profile_type_enum AS ENUM ('client', 'staff', 'admin');
 CREATE TABLE members (
     id SERIAL PRIMARY KEY,
     email VARCHAR(50) NOT NULL UNIQUE,
-    hashed_password VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     phone_number VARCHAR(10) NOT NULL,
     first_name VARCHAR(50) NOT NULL,

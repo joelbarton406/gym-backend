@@ -94,14 +94,14 @@
 	/dt
 	select * from members;
 2025-02-18 13:32:41.553 MST [77498] ERROR:  column "passwordHash" does not exist at character 23
-2025-02-18 13:32:41.553 MST [77498] HINT:  Perhaps you meant to reference the column "members.hashed_password".
+2025-02-18 13:32:41.553 MST [77498] HINT:  Perhaps you meant to reference the column "members.password".
 2025-02-18 13:32:41.553 MST [77498] STATEMENT:  select "id", "email", "passwordHash", "createdAt", "phonenumber", "first_name", "last_name", "profile_type" from "members" where "members"."email" = $1 limit $2
 2025-02-18 13:34:57.665 MST [74732] ERROR:  cannot drop table members because other objects depend on it
 2025-02-18 13:34:57.665 MST [74732] DETAIL:  constraint classes_instructor_id_fkey on table classes depends on table members
 2025-02-18 13:34:57.665 MST [74732] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
 2025-02-18 13:34:57.665 MST [74732] STATEMENT:  DROP TABLE members;
 2025-02-18 14:39:07.934 MST [89322] ERROR:  relation "members" does not exist at character 119
-2025-02-18 14:39:07.934 MST [89322] STATEMENT:  select "id", "email", "hashed_password", "created_at", "phone_number", "first_name", "last_name", "profile_type" from "members" where "members"."email" = $1 limit $2
+2025-02-18 14:39:07.934 MST [89322] STATEMENT:  select "id", "email", "password", "created_at", "phone_number", "first_name", "last_name", "profile_type" from "members" where "members"."email" = $1 limit $2
 2025-02-18 14:39:33.809 MST [74732] ERROR:  type "profile_type_enum" already exists
 2025-02-18 14:39:33.809 MST [74732] STATEMENT:  CREATE TYPE profile_type_enum AS ENUM ('client', 'staff', 'admin');
 2025-02-18 15:12:59.190 MST [99449] ERROR:  type "profile_type_enum" already exists
@@ -113,3 +113,11 @@
 2025-02-20 13:26:34.334 MST [90941] ERROR:  syntax error at or near "ls" at character 1
 2025-02-20 13:26:34.334 MST [90941] STATEMENT:  ls
 	;
+2025-02-20 18:48:13.832 MST [4635] ERROR:  cannot drop table classes because other objects depend on it
+2025-02-20 18:48:13.832 MST [4635] DETAIL:  constraint enrollments_class_id_fkey on table enrollments depends on table classes
+2025-02-20 18:48:13.832 MST [4635] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2025-02-20 18:48:13.832 MST [4635] STATEMENT:  drop table classes;
+2025-02-20 18:48:26.036 MST [4635] ERROR:  cannot drop table members because other objects depend on it
+2025-02-20 18:48:26.036 MST [4635] DETAIL:  constraint sessions_member_id_fkey on table sessions depends on table members
+2025-02-20 18:48:26.036 MST [4635] HINT:  Use DROP ... CASCADE to drop the dependent objects too.
+2025-02-20 18:48:26.036 MST [4635] STATEMENT:  drop table members;

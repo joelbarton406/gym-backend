@@ -2,12 +2,12 @@ import Joi from "joi";
 
 export const memberLoginSchema = Joi.object({
   email: Joi.string().email().required(),
-  plaintext_password: Joi.string().min(8).required(),
+  password: Joi.string().min(8).required(),
 });
 
 export const memberSignupSchema = Joi.object({
   email: Joi.string().email().required(),
-  plaintext_password: Joi.string().min(8).required(),
+  password: Joi.string().min(8).required(),
   phone_number: Joi.string()
     .pattern(/^[0-9]{10,15}$/)
     .required(),

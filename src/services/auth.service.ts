@@ -16,22 +16,19 @@ export const signup = async (rawMember: RawMember) => {
     throw new Error("Email already in use");
   }
 
-  const hashed_password = await bcrypt.hash(
-    rawMember.plaintext_password,
-    SALT_ROUNDS
-  );
+  const password = await bcrypt.hash(rawMember.password, SALT_ROUNDS);
 
   const [member] = await db
     .insert(members)
     .values({
       ...rawMember,
-      hashed_password,
+      password,
       created_at: new Date().toISOString(),
     })
     .returning({
       id: members.id,
       email: members.email,
-      hashed_password: members.hashed_password,
+      password: members.password,
       created_at: members.created_at,
       phone_number: members.phone_number,
       first_name: members.first_name,
@@ -54,8 +51,8 @@ export const login = async (credentials: Credentials) => {
   }
 
   const passwordsMatch = await bcrypt.compare(
-    credentials.plaintext_password,
-    member.hashed_password
+    credentials.password,
+    member.password
   );
 
   if (!passwordsMatch) {

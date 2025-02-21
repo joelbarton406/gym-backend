@@ -28,7 +28,7 @@ validateConnection();
 export const members = pgTable("members", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
-  hashed_password: text("hashed_password").notNull(),
+  password: text("password").notNull(),
   created_at: date("created_at").notNull(),
   phone_number: text("phone_number").notNull(),
   first_name: text("first_name").notNull(),
@@ -73,10 +73,10 @@ export type Session = InferSelectModel<typeof sessions>;
 export type Enrollment = InferSelectModel<typeof enrollments>;
 
 export type RawMember = {
-  plaintext_password: string;
-} & Omit<Member, "id" | "created_at" | "hashed_password">;
+  password: string;
+} & Omit<Member, "id" | "created_at" | "password">;
 
 export type Credentials = {
-  plaintext_password: string;
+  password: string;
   email: string;
 };

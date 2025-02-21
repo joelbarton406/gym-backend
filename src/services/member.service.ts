@@ -4,7 +4,7 @@ import { InferSelectModel, eq } from "drizzle-orm";
 const fields = {
   id: members.id,
   email: members.email,
-  hashed_password: members.hashed_password,
+  password: members.password,
   created_at: members.created_at,
   phone_number: members.phone_number,
   first_name: members.first_name,
