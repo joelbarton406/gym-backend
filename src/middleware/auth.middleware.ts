@@ -8,26 +8,25 @@ export const authenticateSession = async (
   res: Response,
   next: NextFunction
 ) => {
-  const sessionId = req.headers.authorization?.split(" ")[1];
+  const sessionId = req.cookies.sessionId;
+  console.log(req.cookies);
 
   if (!sessionId) {
-    res.status(401).json({ message: "No session token provided" });
+    res.status(401).send("Unauthorized: No sessionId cookie found");
     return;
   }
 
+  // basic token verification
   const [session] = await db
     .select()
     .from(sessions)
     .where(and(eq(sessions.id, sessionId), gt(sessions.expires_at, new Date())))
     .limit(1);
 
-  console.log({ sessionId, session });
   if (!session) {
     res.status(401).json({ message: "Invalid or expired session" });
     return;
   }
-
-  (req as unknown as { memberId: number }).memberId = session.member_id; // ts is ridiculous
 
   next();
 };
