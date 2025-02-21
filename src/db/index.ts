@@ -64,7 +64,7 @@ export const sessions = pgTable("sessions", {
     .references(() => members.id)
     .notNull(),
   expires_at: timestamp("expires_at").notNull(),
-  created_at: timestamp("created_at").defaultNow().notNull(),
+  created_at: timestamp("created_at").notNull(),
 });
 
 export type Class = InferSelectModel<typeof classes>;

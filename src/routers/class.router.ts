@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import {
   readClasses,
   createClass,
@@ -9,7 +9,9 @@ import {
 
 const classRouter = express.Router();
 
-classRouter.post("/", createClass);
+classRouter.post("/", (req: Request, res: Response) => {
+  res.status(200).json("Create a class");
+});
 classRouter.get("/", readClasses);
 
 export default classRouter;

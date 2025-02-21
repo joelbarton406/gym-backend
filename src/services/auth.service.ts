@@ -1,9 +1,9 @@
 import { RawMember, db, members, sessions, Credentials } from "../db";
 import bcrypt from "bcrypt";
 import { randomBytes } from "crypto";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 const SALT_ROUNDS = 12;
-const SESSION_DURATION = 60 * 30 * 1000; // 30 minute session
+const SESSION_DURATION = 10 * 60 * 1000; // 10 minute sessions
 
 export const signup = async (rawMember: RawMember) => {
   const [existingMember] = await db
@@ -53,27 +53,43 @@ export const login = async (credentials: Credentials) => {
     throw new Error("Invalid credentials, email not found");
   }
 
-  const passwordValid = await bcrypt.compare(
+  const passwordsMatch = await bcrypt.compare(
     credentials.plaintext_password,
     member.hashed_password
   );
 
-  if (!passwordValid) {
+  if (!passwordsMatch) {
     throw new Error("Invalid credentials, incorrect password");
   }
 
+  const [existingSession] = await db
+    .select()
+    .from(sessions)
+    .where(eq(sessions.member_id, member.id))
+    .limit(1);
+
+  if (existingSession) {
+    await db
+      .delete(sessions)
+      .where(
+        and(
+          eq(sessions.id, existingSession.id),
+          eq(sessions.member_id, member.id)
+        )
+      );
+  }
   const sessionId = randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + SESSION_DURATION);
-
-  // Corrected insert operation
+  const createdAt = new Date(Date.now());
   const [session] = await db
     .insert(sessions)
     .values({
       id: sessionId,
       member_id: member.id,
       expires_at: expiresAt,
+      created_at: createdAt,
     })
-    .returning(); 
+    .returning();
 
   return {
     sessionId: session.id,

@@ -21,6 +21,7 @@ export const authenticateSession = async (
     .where(and(eq(sessions.id, sessionId), gt(sessions.expires_at, new Date())))
     .limit(1);
 
+  console.log({ sessionId, session });
   if (!session) {
     res.status(401).json({ message: "Invalid or expired session" });
     return;
@@ -37,8 +38,9 @@ export const authorizeMember = async (
   next: NextFunction
 ) => {
   const memberIdFromRequest = (req as unknown as { memberId: number }).memberId;
-  const memberIdFromRoute = req.params.memberId;
+  const memberIdFromRoute = req.params.id;
 
+  console.log({ params: req.params, memberIdFromRequest, memberIdFromRoute });
   if (memberIdFromRequest === Number(memberIdFromRoute)) {
     next();
     return;
