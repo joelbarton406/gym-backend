@@ -76,7 +76,7 @@ export const login = async (credentials: Credentials) => {
       );
   }
   const sessionId = randomBytes(32).toString("hex");
-  console.log({ sessionId });
+
   const expiresAt = new Date(Date.now() + SESSION_DURATION);
   const createdAt = new Date(Date.now());
   const [session] = await db
@@ -88,7 +88,7 @@ export const login = async (credentials: Credentials) => {
       created_at: createdAt,
     })
     .returning();
-
+  console.log({ session });
   return {
     sessionId: session.id,
     expiresAt,

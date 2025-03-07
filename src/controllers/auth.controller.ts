@@ -21,6 +21,9 @@ export const signup = async (req: Request, res: Response) => {
       httpOnly: true,
       sameSite: "lax",
       expires: expiresAt,
+      path: "/",
+      // For local development, explicitly set domain to match your API
+      domain: "localhost",
     });
 
     res.status(201).json({ member });
@@ -33,14 +36,19 @@ export const signup = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const credentials: Credentials = validate(req.body, memberLoginSchema);
+    console.log("credentials validated");
     const { sessionId, expiresAt, member } = await authService.login(
       credentials
     );
 
+    // Use res.cookie consistently instead of setHeader
     res.cookie("sessionId", sessionId, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "lax", // Changed from "None" to "lax"
       expires: expiresAt,
+      path: "/",
+      // For local development, explicitly set domain to match your API
+      domain: "localhost",
     });
 
     res.status(200).json({ member });

@@ -15,12 +15,21 @@ import classRouter from "./routers/class.router";
 import authRouter from "./routers/auth.router";
 
 const app = express();
-
-app.use(cors());
-app.use(compression());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+    exposedHeaders: ["*", "Authorization"],
+  })
+);
+app.use(compression());
 app.use(bodyParser.json());
-
+app.use((req, res, next) => {
+  console.log("Request cookies:", req.cookies);
+  console.log("Request headers:", req.headers);
+  next();
+});
 app.use("/api/auth", authRouter);
 app.use("/api/members", authenticateSession, memberRouter);
 app.use("/api/classes", authenticateSession, classRouter);
